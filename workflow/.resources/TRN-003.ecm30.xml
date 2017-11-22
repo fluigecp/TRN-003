@@ -953,23 +953,23 @@
         <version>1</version>
       </workflowProcessEventPK>
       <eventDescription>function startconditional34() {
-	var today = new Date();
-	var yyyy = today.getFullYear();
+    var today = new Date();
+    var yyyy = today.getFullYear();
     var year = parseInt(yyyy) + 1;
     log.info(&quot;GET COUNT DEPARTAMENTOS&quot;);
     var countDepartamentos = getCountDepartamentos();
     log.info(&quot;GET COUNT PROCESSOS OK NO ANO VIGENTE&quot;);
     var countProcessOk = getCountDepartamentoPlanejamentoThisYear(year);
-    log.info(&quot;COUNT DEPARTAMENTOS: &quot;+countDepartamentos);
-    log.info(&quot;COUNT PROCESSOS OK: &quot;+countProcessOk);
+    log.info(&quot;COUNT DEPARTAMENTOS: &quot; + countDepartamentos);
+    log.info(&quot;COUNT PROCESSOS OK: &quot; + countProcessOk);
 
     var hasOrcamento = hasOrcamentoThisYear(year);
-    if ( countDepartamentos == countProcessOk &amp;&amp; hasOrcamento != &quot;Sim&quot;) {
+    if (countDepartamentos == countProcessOk &amp;&amp; hasOrcamento != &quot;Sim&quot;) {
         log.info(&quot;COUNT PROCESSOS QUE AGUARDAM ORÇAMENTOS == COUNT DEPARTAMENTOS&quot;);
         return true;
     } else {
         if (hasOrcamento == &quot;Sim&quot;) {
-            log.info(&quot;EXISTE ORÇAMENTO PRO ANO DE: &quot; + year);    
+            log.info(&quot;EXISTE ORÇAMENTO PRO ANO DE: &quot; + year);
         } else {
             log.info(&quot;COUNT PROCESSOS QUE AGUARDAM ORÇAMENTOS !== COUNT DEPARTAMENTOS&quot;);
         }
@@ -977,50 +977,50 @@
     }
 }
 /**
-* @param {int} ano - Ano que será objeto da pesquisa.
-* @returns {int} - Quantidade de departamentos com planejamento com status OK no ano especificado
-* @description Retorna quantidade de departamentos que possuem um planejamento de treinamentos
-* em um ano específico.
-*/
+ * @param {int} ano - Ano que será objeto da pesquisa.
+ * @returns {int} - Quantidade de departamentos com planejamento com status OK no ano especificado
+ * @description Retorna quantidade de departamentos que possuem um planejamento de treinamentos
+ * em um ano específico.
+ */
 function getCountDepartamentoPlanejamentoThisYear(ano) {
-var c1 = DatasetFactory.createConstraint(&quot;metadata#active&quot;, true, true,ConstraintType.MUST);
-var c2 = DatasetFactory.createConstraint(&quot;anoVigencia&quot;,ano.toString(),ano.toString(), ConstraintType.MUST); 
-var c3 = DatasetFactory.createConstraint(&quot;processState&quot;, &quot;OK&quot;, &quot;OK&quot;,ConstraintType.MUST);
-var dataset = DatasetFactory.getDataset(&apos;propor_treinamentos_anuais&apos;,null,[c1,c2,c3],[&apos;documentid&apos;]);
-if ( dataset.rowsCount &gt; 0 ) {
-    return dataset.rowsCount;
-}
-return 0;
+    var c1 = DatasetFactory.createConstraint(&quot;metadata#active&quot;, true, true, ConstraintType.MUST);
+    var c2 = DatasetFactory.createConstraint(&quot;anoVigencia&quot;, ano.toString(), ano.toString(), ConstraintType.MUST);
+    var c3 = DatasetFactory.createConstraint(&quot;processState&quot;, &quot;OK&quot;, &quot;OK&quot;, ConstraintType.MUST);
+    var dataset = DatasetFactory.getDataset(&apos;propor_treinamentos_anuais&apos;, null, [c1, c2, c3], [&apos;documentid&apos;]);
+    if (dataset.rowsCount &gt; 0) {
+        return dataset.rowsCount;
+    }
+    return 0;
 }
 /**
-* @returns {int} - Quantidade de departamentos no dataset.
-* @description - Retorna a quantidade de departamentos cadastrados no dataset.
-*/
-function getCountDepartamentos() { 
-	var c1 = DatasetFactory.createConstraint(&quot;metadata#active&quot;, true, true,ConstraintType.MUST);
-	var data = DatasetFactory.getDataset(&quot;cadastro_areas_orcamento&quot;, null, [c1], [&quot;documentid&quot;]);
-    if ( data.rowsCount &gt; 0 ) {
+ * @returns {int} - Quantidade de departamentos no dataset.
+ * @description - Retorna a quantidade de departamentos cadastrados no dataset.
+ */
+function getCountDepartamentos() {
+    var c1 = DatasetFactory.createConstraint(&quot;metadata#active&quot;, true, true, ConstraintType.MUST);
+    var data = DatasetFactory.getDataset(&quot;cadastro_areas_orcamento&quot;, null, [c1], [&quot;documentid&quot;]);
+    if (data.rowsCount &gt; 0) {
         return data.rowsCount;
     } else {
         return 0;
     }
-    
+
 }
 /**
-* @param {int} year - Ano que será objeto da pesquisa.
-* @returns {string} - &apos;Sim&apos; ou &apos;Não&apos;
-* @description - Retorna &apos;Sim&apos; caso já tenha um planejamento de orçamentos para o ano informado 
-* ou, do contrário, retorna &apos;Não&apos;.
-*/
+ * @param {int} year - Ano que será objeto da pesquisa.
+ * @returns {string} - &apos;Sim&apos; ou &apos;Não&apos;
+ * @description - Retorna &apos;Sim&apos; caso já tenha um planejamento de orçamentos para o ano informado 
+ * ou, do contrário, retorna &apos;Não&apos;.
+ */
 function hasOrcamentoThisYear(year) {
-var c1 = DatasetFactory.createConstraint(&quot;metadata#active&quot;, true, true,ConstraintType.MUST);
-var c2 = DatasetFactory.createConstraint(&quot;anoVigencia&quot;, year, year,ConstraintType.MUST);
-var c3 = DatasetFactory.createConstraint(&quot;hasOrcamentoThisYear&quot;, &quot;Sim&quot;, &quot;Sim&quot;,ConstraintType.MUST);
-var data = DatasetFactory.getDataset(&quot;cadastro_orcamentos&quot;, null, [c1,c2,c3], [&quot;documentid&quot;]);
-if (data.rowsCount &gt; 0) {
-    return &quot;Sim&quot;;
-} 
-return &quot;Não&quot;;
+    var c1 = DatasetFactory.createConstraint(&quot;metadata#active&quot;, true, true, ConstraintType.MUST);
+    var c2 = DatasetFactory.createConstraint(&quot;anoVigencia&quot;, year, year, ConstraintType.MUST);
+    var c3 = DatasetFactory.createConstraint(&quot;hasOrcamentoThisYear&quot;, &quot;Sim&quot;, &quot;Sim&quot;, ConstraintType.MUST);
+    var data = DatasetFactory.getDataset(&quot;cadastro_orcamentos&quot;, null, [c1, c2, c3], [&quot;documentid&quot;]);
+    if (data.rowsCount &gt; 0) {
+        return &quot;Sim&quot;;
+    }
+    return &quot;Não&quot;;
 }
 </eventDescription>
     </WorkflowProcessEvent>
